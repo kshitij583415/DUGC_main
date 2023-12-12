@@ -297,12 +297,12 @@ button.toast-close-button {
   margin: 1em 5em;
 }
 
-.nav-options {
+/* .nav-options {
   display: flex;
   flex-direction: row;
   margin-top: 0.4em;
   padding-bottom: 0.4em;
-}
+} */
 
 .nav-op {
   padding: 0.3em 0.9em !important;

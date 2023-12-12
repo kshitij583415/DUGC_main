@@ -26,21 +26,21 @@ export class DugcLoginComponent implements OnInit {
     this.showLoginForm = false;
   }
 
-  onCLickLoginHome() {
-    if (this.userMail == 'dugc@123') {
-      this.router.navigate(['/Minor']);
-      this.showLoginForm = false;
-    } else if (this.userMail == 'co@123') {
-      this.router.navigate(['/Minor']);
-      this.showLoginForm = false;
-    } else if (this.userMail == 'admin@123') {
-      this.router.navigate(['/Minor']);
-      this.showLoginForm = false;
-    } else if (this.userMail == 'fac@123') {
-      this.router.navigate(['/Minor']);
-      this.showLoginForm = false;
-    }
-  }
+  // onCLickLoginHome() {
+  //   if (this.userMail == 'dugc@123') {
+  //     this.router.navigate(['/Minor']);
+  //     this.showLoginForm = false;
+  //   } else if (this.userMail == 'co@123') {
+  //     this.router.navigate(['/Minor']);
+  //     this.showLoginForm = false;
+  //   } else if (this.userMail == 'admin@123') {
+  //     this.router.navigate(['/Minor']);
+  //     this.showLoginForm = false;
+  //   } else if (this.userMail == 'fac@123') {
+  //     this.router.navigate(['/Minor']);
+  //     this.showLoginForm = false;
+  //   }
+  // }
 
   logindata = {
     // role: '',

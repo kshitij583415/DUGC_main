@@ -1,0 +1,7 @@
+.nav-options1 {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+    padding-bottom: 0.4em;
+    justify-content: center;
+}

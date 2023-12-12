@@ -15,7 +15,7 @@ export class AuthMainService {
   constructor(private http: HttpClient, private route: Router) {}
 
   LoginUser(user: any) {
-    return this.http.post(this.Loginurl, user);
+    return this.http.post(this.Loginurl, user, { withCredentials: true });
   }
 
   RegisterUser(user: any) {

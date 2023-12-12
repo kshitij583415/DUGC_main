@@ -9,3 +9,14 @@ h1 {
   top: 10px;
   font-size: xx-large;
 }
+
+.nav-options {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+  margin-bottom: 0.4em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;                                                                                    
+}
+
