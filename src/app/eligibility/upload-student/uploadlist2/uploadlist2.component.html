@@ -1,82 +1,3 @@
-<!-- <br>
-<h2 class="nav-des1">Upload Ineligible student list for courses</h2>
-<br>
-<div class="mod">
-
-      <div class="modal-content">
-        <div class="modal-header">
-        </div>
-
-        <form (submit)="uploadstudent()" #get="ngForm" enctype="multipart/form-data">
-        <div class="modal-body">
-
-          <label class="control-label" for="course">SelectSem</label>
-
-          <select class="form-select mb-3" name="sem"  id="type" ngModel [required]="true">
-          <option >3</option>
-          <option>4</option>
-          <option>5</option>
-          <option >6</option>
-          <option >7</option>
-          <option>8</option>
-          </select>
-          <br>
-          <br>
-
-            <input type="file" class="form-control" id="customFile" (change)="readfile($event)"/>
-        </div>
-        <br>
-        <div class="modal-footer">
-            <button type="submit" id="card" class="btn">
-                <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                upload
-              </button>
-               </div>
-      </form>
-      </div>
-    </div>
-
-    <br>
-
-
-    <div class="table-responsive">
-      <table class="table table-bordered table-sm caption-top" style="text-align:center;border:2px;">
-
-        <thead class="table-active">
-          <tr>
-              <th  scope="col">Sl no.</th> -->
-              <!-- <th scope="col">USN</th>
-              <th scope="col">Name</th>
-              <th scope="col">courseid</th>
-              <th scope="col" >coursename</th>
-              <th scope="col" >sem</th>
-              <th scope="col" >div</th>
-              <th scope="col" >cie</th>
-              <th scope="col" >attendance</th>
-
-          </tr>
-        <tbody *ngFor="let student of ExelData">
-          <tr> -->
-            <!-- <td>{{1}}</td> -->
-              <!-- <td >{{student.USN}}</td>
-              <td >{{student.Name}}</td>
-              <td >{{student.CourseId}}</td>
-              <td >{{student.CourseName}}</td>
-              <td >{{student.Sem}}</td>
-              <td >{{student.div}}</td>
-              <td >{{student.CIE}}</td>
-              <td >{{student.Attendance}}</td> -->
-
-
-              <!-- <td><button class="btn btn-success btn-rounded">Approve</button></td>
-              <td><button class="btn btn-danger btn-rounded">disapprove</button></td> -->
-          <!-- </tr>
-        </tbody>
-      </table>
-      </div> -->
-
-
-
 
       <br>
 <h2 class="nav-des1">Upload Ineligible student list for courses</h2>
@@ -112,20 +33,45 @@
           </div>
       </form>
         <br>
-        <!-- <div class="modal-footer">
-            <button type="submit" id="card" class="btn">
-                <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                upload
-              </button>
-               </div> -->
+
                <div class="input-section">
                 <div class="status-message">{{statusMessage}}</div>
             </div>
-               <div>
-                <button id="submit-upload" (click)="submitForm1()">Upload</button>
-                <!-- <button id="reset-button" (click)="resetForm()">Reset</button> -->
-            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn" id="submit-upload" (click)="submitForm1()">
+                  <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                  Upload
+                </button>
+                 </div>
+
+
+
+
       </form>
+      <!-- <form class="form-input1">
+        <div class="modal-body">
+          <label class="control-label" for="course">Select Sem</label>
+          <select class="form-select mb-3" name="sem" id="sem" [(ngModel)]="inp1.sem" required>
+            <option value="" disabled selected>Select Semester</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+
+        </div>
+
+
+
+        <button class="btn" id="submit-upload" (click)="retrieveDataBySem()">
+          <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M3 18h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V8H3v2z"/>
+          </svg>
+          Retrieve Data
+        </button>
+      </form> -->
       </div>
     </div>
 

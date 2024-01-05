@@ -4,7 +4,7 @@
 .mod
   {
     width:30%;
-    align-items: center; 
+    align-items: center;
     margin-left: 35%; }
 
 .nav-des1 {
@@ -17,17 +17,17 @@
     text-align: center;
   }
 
-  #card:not(.highlight-card):hover {
+  #submit-upload:not(.highlight-card):hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
     color: black;
   }
 
-   #card:not(.highlight-card):hover .material-icons path {
+   #submit-upload:not(.highlight-card):hover .material-icons path {
     fill: rgb(105, 103, 103);
   }
 
-#card
+#submit-upload
 {
     background:#C62128;
       color: white;
@@ -43,5 +43,5 @@
   }
 
 
-  
+
 

@@ -50,16 +50,17 @@ config();
 
 const securityHandler = new AuthMiddleware();
 
-//!Minor analysis import -END
-let mongo = mongoose.connect(
-  "mongodb+srv://jithendra:jhonny%40589@dugc.gd7mtam.mongodb.net/test"
-);
-
-if (mongo) {
-  console.log("connected to mongo");
-} else {
-  console.log("unable to connect");
-}
+mongoose.connect("mongodb+srv://jithendra:jhonny%40589@dugc.gd7mtam.mongodb.net/test", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log("Connected to MongoDB");
+    // Place your server startup code here
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -231,185 +232,99 @@ app.post("/upload_sheets", (req, res) => {
 });
 
 
+const Theory = require('./models/theories.js'); // Import the User model here
+const xlsx = require('xlsx');
+var uploadi = multer({ storage: storage });
 
-app.post("/uploadTheory", upload.single('filename'), (req, res) => {
-  const { sem } = req.body;
 
-  // Check if the file is present in the request
-  if (!req.file) {
-      console.log("File is missing.");
-      return res.status(400).json({ error: "File is missing." });
+app.post("/uploadTheory", async (req, res) => {
+  const { sem, filename } = req.body;
+  console.log("Result => ", req.body);
+
+  if (!filename) {
+    console.log("Filename is not provided in the request.");
+    return res.status(400).json({ error: "Filename is required in the request body." });
   }
-
-  const filename = req.file.originalname;
   let f = filename.split("\\");
   let file_name = f[f.length - 1];
-  console.log(file_name);
-let result1={};
-// let new_data = data_file;
- try {
-         result1 = excelToJson({
-          sourceFile1: path.join(__dirname, "spreadsheets/", file_name),
 
-        });
-        // const sourceFile1=path.join(__dirname, "spreadsheets/", file_name)
-        console.log(sourceFile1);
-      } catch (err) {
-        console.log("File not found!");
-      }
-      let result_keys = Object.keys(result1);
-      console.log(
-        "*************************************************************************************"
-      );
-      console.log(result1);
-      console.log(
-        "***************************************************************************************"
-      );
-      // read_result.Average = parseFloat(result[result_keys[0]][0]["C"])
-      //   .toFixed(2)
-      //   .toString();
-      // //S grade
-      // read_result.S_grade = result[result_keys[0]][2]["C"];
-      // //A grade
-      // read_result.A_grade = result[result_keys[0]][3]["C"];
-      // //B grade
-      // read_result.B_grade = result[result_keys[0]][4]["C"];
-      // //C grade
-      // read_result.C_grade = result[result_keys[0]][5]["C"];
-      // //D grade
-      // read_result.D_grade = result[result_keys[0]][6]["C"];
-      // //Total
-      // read_result.total = result[result_keys[0]][7]["C"];
-      // console.log(read_result);
-      // new_data[sem][filename]= { result
-      //   // Average: read_result.Average,
-      //   // S: read_result.S_grade,
-      //   // A: read_result.A_grade,
-      //   // B: read_result.B_grade,
-      //   // C: read_result.C_grade,
-      //   // D: read_result.D_grade,
-      //   // Total: read_result.total,
-      // };
-      // fs.writeFile("./data_files/data-copy.json", JSON.stringify(new_data), () => {
-      //   console.log("Done writing!");
-      // });
-
-      let new_data1 = {};  // Initialize new_data as an empty object
-
-// Ensure that sem and filename are valid keys
-if (!new_data1[sem]) {
-  new_data1[sem] = {};
-}
-
-new_data1[sem][filename] = { result1};
-
-fs.writeFile("./data_files/ineligible.json", JSON.stringify(new_data1), (err) => {
-  if (err) {
-    console.error("Error writing file:", err);
-  } else {
-    console.log("Done writing!");
+  let result1 = {};
+  try {
+    result1 = excelToJson({
+      sourceFile: path.join(__dirname, "spreadsheets/new", file_name),
+    });
+    console.log(result1);
+  } catch (err) {
+    console.log("File not found!");
+    return res.status(400).json({ error: "File not found." });
   }
-});
 
+  let resultSheet1 = result1.Sheet1;
+// Filter out entries where Sl_no is null
+resultSheet1 = resultSheet1.filter(data => isValidNumber(data.A));
+
+// Map the data to the desired format for MongoDB insertion
+let userData = resultSheet1.map((data) => ({
+  Sl_no: parseInt(data.A),
+  USN: data.B,
+  Name: data.C,
+  Sem: isValidNumber(data.D) ? parseInt(data.D) : null,
+  div: data.E,
+  CourseId: data.F,
+  CourseName: data.G,
+  CIE: isValidNumber(data.H) ? parseInt(data.H) : null,
+  Attendance: isValidNumber(data.I) ? parseInt(data.I) : null,
+}));
+
+try {
+  // Insert the transformed data into MongoDB
+  const result2 = await Theory.create(userData);
+  console.log("Data inserted into MongoDB!", result2);
+
+  // You can also write the data to a JSON file if needed
+  fs.writeFile("./data_files/ineligible.json", JSON.stringify(userData), (err) => {
+    if (err) {
+      console.error("Error writing file:", err);
+    } else {
+      console.log("Done writing JSON file!");
+    }
+  });
 
   res.json({
-      sem,
-      filename: file_name,
+    sem,
+    filename: file_name,
   });
+} catch (err) {
+  console.error("Error inserting data into MongoDB:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+}
 });
 
+function isValidNumber(value) {
+  return !isNaN(value) && value !== null && value !== undefined;
+}
 
 
 
+// Endpoint to retrieve data based on semester
+app.get("/getTheoryBySem/:sem", async (req, res) => {
+  console.log("HIIII in app");
+  try {
+    const sem = parseInt(req.params.sem);
 
+    if (isNaN(sem)) {
+      return res.status(400).json({ error: "Invalid semester value provided." });
+    }
 
-// app.post("/uploadTheory", (req, res) => {
-//   // let this_year = "2022-23";
-//   // const { academic_year, sem_type, semester, course, exam, section, filename } =
-//   //   req.body;
-//   // console.log("HIII");
-//   console.log(req.body);
-//   const {sem,filename} = req.body;
-//   console.log("Result => ", req.body);
-//   let new_data = data_file;
-//   let read_result = {};
-//   // let index = 0;
-
-//   // if (exam == "m1") {
-//   //   index = 0;
-//   // } else if (exam == "m2") {
-//   //   index = 1;
-//   // } else {
-//   //   index = 2;
-//   // }
-//   console.log("HIII");
-//   if (filename) {
-//     let f = filename.split("\\");
-//     let file_name = f[f.length - 1];
-//     console.log(file_name);
-//     // rest of your code...
-//   } else {
-//     console.log("Filename is undefined or null.");
-//     // Handle the error or send an appropriate response.
-//   }
-
-
-
-//   // let f = filename.split("\\");
-//   // let file_name = f[f.length - 1];
-//   // console.log(file_name);
-//   try {
-//     result = excelToJson({
-//       sourceFile: path.join(__dirname, "spreadsheets/", file_name),
-
-//     });
-//     console.log(result);
-//   } catch (err) {
-//     console.log("File not found!");
-//   }
-//   let result_keys = Object.keys(result);
-//   console.log(
-//     "*************************************************************************************"
-//   );
-//   console.log(result);
-//   console.log(
-//     "***************************************************************************************"
-//   );
-//   // read_result.Average = parseFloat(result[result_keys[0]][0]["C"])
-//   //   .toFixed(2)
-//   //   .toString();
-//   // //S grade
-//   // read_result.S_grade = result[result_keys[0]][2]["C"];
-//   // //A grade
-//   // read_result.A_grade = result[result_keys[0]][3]["C"];
-//   // //B grade
-//   // read_result.B_grade = result[result_keys[0]][4]["C"];
-//   // //C grade
-//   // read_result.C_grade = result[result_keys[0]][5]["C"];
-//   // //D grade
-//   // read_result.D_grade = result[result_keys[0]][6]["C"];
-//   // //Total
-//   // read_result.total = result[result_keys[0]][7]["C"];
-//   // console.log(read_result);
-//   new_data[sem][attendence] = {
-//     // Average: read_result.Average,
-//     // S: read_result.S_grade,
-//     // A: read_result.A_grade,
-//     // B: read_result.B_grade,
-//     // C: read_result.C_grade,
-//     // D: read_result.D_grade,
-//     // Total: read_result.total,
-//   };
-//   fs.writeFile("./data_files/data-copy.json", JSON.stringify(new_data), () => {
-//     console.log("Done writing!");
-//   });
-//   res.json({
-//       sem,
-//       filename,
-//   });
-// });
-
-
+    // Query MongoDB to find data based on the provided semester
+    const theoryData = await Theory.find({ Sem: sem });
+    console.log(theoryData);
+    res.json(theoryData);
+  } catch (err) {
+    console.error("Error retrieving data from MongoDB:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.post("/upload_multiple_sheets", (req, res) => {
   let this_year = "2022-23";
@@ -771,3 +686,15 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+

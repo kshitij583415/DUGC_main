@@ -25,6 +25,7 @@ export class Uploadlist2Component implements OnInit {
    submitted: any;
 
   ngOnInit(): void {
+
   }
 
   filename: File | null = null;
@@ -78,26 +79,6 @@ onSubmit1(): void {
 
 
 
-
-  // validateInput1(): boolean {
-  //   for (let i in this.inp1) {
-  //     if (this.inp1[i] == ' ' || !this.inp1[i]) {
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
-
-  // validateInput1(): boolean {
-  //   for (let key in this.inp1) {
-  //     const value = this.inp1[key].trim(); // Trim leading and trailing spaces
-  //     if (value === '') {
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
-
   validateInput1(): boolean {
     for (let key in this.inp1) {
       const value = this.inp1[key].trim();
@@ -129,6 +110,37 @@ onSubmit1(): void {
       this.onSubmit1();
     }
   }
+
+
+
+
+
+  // ...
+
+retrieveDataBySem(): void {
+  if (!this.validateInput1()) {
+    this.statusMessage = 'ERROR: Invalid or missing field';
+  } else {
+    this.statusMessage = '';
+    const sem = parseInt(this.inp1.sem);
+    this.dataService.getTheoryBySem(sem).subscribe(
+      (data) => {
+        console.log('Data retrieved successfully:', data);
+        // Handle the retrieved data as needed
+      },
+      (error) => {
+        console.log('Error retrieving data:', error);
+        // Handle error retrieving data
+      }
+    );
+  }
+}
+
+// ...
+
+
+
+
 
     //read xl file to store data in json
 readfile(event:any)
@@ -225,7 +237,5 @@ uploadstudentlab()
 })
 
 }
-
-
 
 }
