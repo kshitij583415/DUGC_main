@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+// import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
+  URI = `${'http://localhost:3000'}`;
 
   constructor(private httpClient:HttpClient) { }
   //methods to comminicate with backend api
@@ -21,11 +23,29 @@ export class StudentsService {
   let  url =environment.STUDENT_BASE_URL+environment.STUDENT.MARKS;
     return this.httpClient.get(url);
   }
-  uploadlist(studentobj:any)
-  {
-    let url = environment.STUDENT_BASE_URL+environment.STUDENT.ADD_STUDENT;
-    return this.httpClient.post(url,studentobj);
+  // uploadlist(studentobj:FormData)
+  // {
+  //   // let url = environment.STUDENT_BASE_URL+environment.STUDENT.ADD_STUDENT;
+  //   // return this.httpClient.post(url,studentobj);
+  // }
+
+  uploadlist(data: any) {
+    const {
+      USN,
+      name,
+      cousreid,
+      coursename,
+      sem,
+      div,
+      cie,
+      attendence,
+      filename,
+    } = data;
+    console.log('Making a get request', data);
+    const headers = new HttpHeaders();
+    return this.httpClient.post(`${this.URI}/upload_theory`, data);
   }
+
   getattendance()
   {
   let  url =environment.STUDENT_BASE_URL+environment.STUDENT.ATTENDANCE;

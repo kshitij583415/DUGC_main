@@ -96,4 +96,14 @@ export class DataService {
       withCredentials: true,
     });
   }
+
+  uploadlist(data: any) {
+    const {
+      sem,
+      filename,
+    } = data;
+    console.log('Making a get request', data);
+    const headers = new HttpHeaders();
+    return this._http.post(`${this.URI}/uploadTheory`, data);
+  }
 }

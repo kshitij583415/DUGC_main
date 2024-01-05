@@ -16,8 +16,8 @@
         <div class="nav-des" id="welcome-message" *ngIf="user_type_name != ''">Welcome, <span
             class="role-display">{{user_type_name}}</span></div>
         <!-- <div class="nav-op2"  [routerLink]="['/loginMain']" *ngIf="!auth.LoggedIn()">Login</div>
-        <div class="nav-op2" [routerLink]="['/register']"  *ngIf="!auth.LoggedIn()">Logout</div>
-        <div class="nav-op2" *ngIf="auth.LoggedIn()" (click)="auth.logout()">Logout</div> -->
+        <div class="nav-op2" [routerLink]="['/register']"  *ngIf="!auth.LoggedIn()">Logout</div> -->
+        <div class="nav-op2" *ngIf="log()" (click)="logout()">Logout</div>
       </div>
     </div>
   </div>

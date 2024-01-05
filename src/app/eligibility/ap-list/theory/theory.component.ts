@@ -52,8 +52,8 @@ export class TheoryComponent implements OnInit {
     private route:Router) {
     this.Showdate = studentService.displayDate();
     }
-    
-   
+
+
 
   ngOnInit(): void {
     console.log(this.courses);
@@ -64,14 +64,14 @@ export class TheoryComponent implements OnInit {
     // console.log(this.couses[0].sem)
     // console.log(this.couses[0].courses[0].code)
     // console.log(this.couses[0].courses[0].name)
-   
+
   }
 
    getStudentList(e:any)
    {
   this.studentService.getmarks().subscribe((data:any)=>
     {
-      
+
       this.showSem=e.sem;
       console.log(this.showSem);
       this.showdiv=e.div;
@@ -101,7 +101,7 @@ this.studentService.getattendance().subscribe((data1:any)=>
       console.log(this.attendance);
       // this.getstudent();
       this.toast.success("student list fetched successfully");
-      
+
 
 },(err:any)=>
 {
@@ -118,13 +118,13 @@ this.studentService.getattendance().subscribe((data1:any)=>
 
 //read xl file to store data in json
 
-  
+
 
     formvalue(E:any)
 {
   let sem=E.target.value;
- 
-  
+
+
   if(sem==7)
   {
     console.log(sem);
@@ -133,7 +133,7 @@ this.studentService.getattendance().subscribe((data1:any)=>
     this.course3="18ECSE402";
     this.course4="19ECSE401";
     this.course5="20ECSE504";
-    
+
 
 
   }
@@ -160,7 +160,7 @@ this.studentService.getattendance().subscribe((data1:any)=>
       this.course2="19ECSC302";
       this.course3="17ECSC302";
       this.course4="22ECSC306";
-      
+
 
         }else if(sem==4){
           console.log(sem);
@@ -171,7 +171,7 @@ this.studentService.getattendance().subscribe((data1:any)=>
           this.course5="22ECSC202";
           this.course6="21ECSC210";
 
-            
+
         }else if(sem==3)
       {
         console.log(sem);
@@ -182,15 +182,15 @@ this.studentService.getattendance().subscribe((data1:any)=>
         this.course5="15ECSC208";
       }
 }
-     
-   
+
+
         getstudent=()=>
         {
           var lookup:any;
           lookup={};
           var items =this.studentList;
 
-        
+
             for (var item, i = 0; item = items[i++];) {
               var name:any;
               var usn:any;
@@ -202,7 +202,7 @@ this.studentService.getattendance().subscribe((data1:any)=>
               course=item.CourseName;
               cid=item.CourseId;
 
-            
+
                     if (!(name in lookup)) {
                       lookup[name] = 1;
                       this.studdentname.push(name);
@@ -226,16 +226,16 @@ this.studentService.getattendance().subscribe((data1:any)=>
                       this.studdentcourseid.push(cid);
                       console.log(this.studdentcourseid);
                     }
-                    
+
                   }
-              
+
             }
-        
-  
+
+
             incrementSno(){
               this.count+=1;
             }
-          
+
             resetSno(){
               this.count = 1;
             }
