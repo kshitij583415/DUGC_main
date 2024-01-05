@@ -26,7 +26,11 @@
 <br />
 <div class="file-upload-section">
 
-  <input type="file" (change)="ReadExcel($event)" class="file-upload-button">
+  <input type="file" (change)="readExcel($event)" class="file-upload-button">
+  <button (click)="submitFile()" class="button-submit">Submit</button>
+</div>
+<div *ngIf="showToaster" class="toaster">
+  {{ toasterMessage }}
 </div>
 <!-- <div id="hide" class="col-lg-8 col-xs-8">
     <label class="hand-cursor">
@@ -38,7 +42,7 @@
 
 <br>
 <br>
-<div class="table-content">
+<!-- <div class="table-content">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -51,15 +55,15 @@
       <tr *ngFor="let data of ExcelData">
         <th scope="row">{{ data.MARKS }}</th>
         <!-- <td>{{data.MARKS}}</td> -->
-        <td>{{ data.GRADE }}</td>
+        <!-- <td>{{ data.GRADE }}</td>
         <td>{{ data.COUNT }}</td>
       </tr>
     </tbody>
   </table>
   <p>{{ x }}</p>
-</div>
-<div id="chart-wrapper">
+</div> --> 
+<!-- <div id="chart-wrapper">
   <canvas id="myChart" style="width: 100%; max-width: 700px"></canvas>
-</div>
+</div> -->
 <router-outlet></router-outlet>
 <!-- <canvas id="myChart" style="width: 100%; max-width: 700px"></canvas> -->
