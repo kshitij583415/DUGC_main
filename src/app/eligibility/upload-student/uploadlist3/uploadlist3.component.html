@@ -1,5 +1,5 @@
 <br>
-<h2 class="nav-des1">upload Ineligiblestudent list for Labs </h2>
+<h2 class="nav-des1">Details of Ineligible students </h2>
 <br>
 <!-- <div class="mod">
 
@@ -98,4 +98,42 @@
         Retrieve Data
       </button>
     </form>
+
+<br><br><br>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm caption-top" style="text-align:center;border:2px;">
+
+        <thead class="table-active">
+          <tr>
+              <!-- <th  scope="col">Sl no.</th> -->
+              <th scope="col">USN</th>
+              <th scope="col">Name</th>
+              <th scope="col">courseid</th>
+              <th scope="col" >coursename</th>
+              <th scope="col" >sem</th>
+              <th scope="col" >div</th>
+              <th scope="col" >cie</th>
+              <th scope="col" >attendance</th>
+
+          </tr>
+        <tbody *ngFor="let student of retrievedData">
+          <tr>
+            <!-- <td>{{1}}</td> -->
+              <td >{{student.USN}}</td>
+              <td >{{student.Name}}</td>
+              <td >{{student.CourseId}}</td>
+              <td >{{student.CourseName}}</td>
+              <td >{{student.Sem}}</td>
+              <td >{{student.div}}</td>
+              <td >{{student.CIE}}</td>
+              <td >{{student.Attendance}}</td>
+
+
+              <!-- <td><button class="btn btn-success btn-rounded">Approve</button></td>
+              <td><button class="btn btn-danger btn-rounded">disapprove</button></td> -->
+          </tr>
+        </tbody>
+      </table>
+      </div>
 

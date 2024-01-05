@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class Uploadlist3Component implements OnInit {
   ExelData:any;
   exeldata:any;
+  retrievedData: any;
 
   constructor(private studentService:StudentsService,
               private labService:LabService,
@@ -148,6 +149,7 @@ retrieveDataBySem(): void {
     this.dataService.getTheoryBySem(sem).subscribe(
       (data) => {
         console.log('Data retrieved successfully:', data);
+        this.retrievedData = data;
         // Handle the retrieved data as needed
       },
       (error) => {
